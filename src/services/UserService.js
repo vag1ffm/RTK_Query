@@ -8,8 +8,12 @@ export const userAPI = createApi({
     }),
     endpoints: build => ({
         fetchAllUsers: build.query({
-            query: () => ({
-                url: "users"
+            query: ({ end }) => ({
+                url: "posts",
+                params: {
+                    _start: 0,
+                    _end: end
+                }
             })
         })
     })
