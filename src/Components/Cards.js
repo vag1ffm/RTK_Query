@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card} from "react-bootstrap";
 
 const Cards = ({item, lastElemId, refProp}) => {
     let [flag, setFlag] = useState(false)
 
-    if (item.id === lastElemId) {
-        setFlag(true)
-    }
+    useEffect(()=> {
+        if (item.id === lastElemId) {
+            setFlag(true)
+        }
+    },[])
 
     return (
-        <Card className="mb-3" >
+        <Card className="mb-3" ref={(flag)? refProp: ()=> {}}>
             <Card.Body>
                 <Card.Title>{item.id}) {item.title}</Card.Title>
                 <Card.Text>{item.body}</Card.Text>

@@ -1,12 +1,10 @@
 import './App.css';
 import './App.css'
-import {useFetchAllUsersQuery} from "./services/UserService";
+import {useFetchAllUsersQuery} from "./services/PostsService";
 import {useEffect, useState} from "react";
-import {Card, Container} from "react-bootstrap";
+import { Container} from "react-bootstrap";
 import {useInView} from "react-intersection-observer";
-import {isAllOf} from "@reduxjs/toolkit";
 import Cards from "./Components/Cards";
-import LastCard from "./Components/LastCard";
 
 
 function App() {
@@ -19,6 +17,7 @@ function App() {
         threshold: 1
     });
 
+
     useEffect(()=> {
         if (inView) {
             setSkip(skip+10)
@@ -27,10 +26,10 @@ function App() {
 
 
     if (isLoading) {
-        return <h1>... Loading</h1>
+        return <Container><h2>... Loading</h2></Container>
     }
     if (isError) {
-        return <>Error</>
+        return <Container><h2>Error</h2></Container>
     }
 
     return (
@@ -38,13 +37,8 @@ function App() {
             <Container>
                 {data?.map((item) => {
                     let lastElemId = data[data.length - 1]?.id
-                    if (item.id === lastElemId) {
-                        return (
-                            <LastCard item={item} refProp={ref}/>
-                        )
-                    }
                     return (
-                        <Cards key={item.id} item={item} lastElemId={lastElemId} /*refProp={ref}*//>
+                        <Cards key={item.id} item={item} lastElemId={lastElemId} refProp={ref}/>
                     )
                 })}
             </Container>
